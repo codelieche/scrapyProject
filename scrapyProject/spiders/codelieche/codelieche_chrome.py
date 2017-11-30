@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+"""
+这个spider是通过chrome打开网页下载内容
+注意点：
+1. 下载器中间件，需要实现process_request方法，并且需要返回个scrapy.http.HtmlResponse对象
+2. ChromeMiddleware需要配置在：scrapyProject.settings.py的DOWNLOADER_MIDDLEWARES中
+"""
 import scrapy
 from scrapy.xlib.pydispatch import dispatcher
 from scrapy import signals
@@ -6,7 +12,7 @@ from selenium import webdriver
 
 
 class CodeliecheSpider(scrapy.Spider):
-    name = 'codelieche'
+    name = 'codelieche_chrome'
     allowed_domains = ['codelieche.com']
     start_urls = ['http://codelieche.com/']
 
@@ -15,6 +21,7 @@ class CodeliecheSpider(scrapy.Spider):
         self.browser = webdriver.Chrome()
         super(CodeliecheSpider, self).__init__()
 
+        # 通过信号触发,closed事件
         dispatcher.connect(self.spider_closed, signal=signals.spider_closed)
 
     def spider_closed(self, spider):

@@ -8,12 +8,17 @@ from selenium import webdriver
 from scrapy.http import HtmlResponse
 
 
-class ChromeMiddlewware():
+class ChromeMiddlewware(object):
+    """
+    使用chrome去打开网页的中间件
+    打开网页后获取页面的源码
+    需要配置在scrapyProject.settings.py的DOWNLOADER_MIDDLEWARES中
+    """
 
-    # def __init__(self):
-    # 注意把webdriver加入到path中
-    #     self.browser = webdriver.Chrome()
-    #     super(ChromeMiddlewware, self).__init__()
+    def __init__(self):
+        # 注意把webdriver加入到path中
+        # self.browser = webdriver.Chrome()
+        super(ChromeMiddlewware, self).__init__()
 
     # 通过chrome请求动态网页
     def process_request(self, request, spider):
