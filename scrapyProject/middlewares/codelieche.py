@@ -22,7 +22,9 @@ class ChromeMiddlewware(object):
 
     # 通过chrome请求动态网页
     def process_request(self, request, spider):
-        if spider.name == "codelieche":
+        # 当爬虫的名字含有chrome，那么我们就使用spider.browser打开网页
+        # 当然也可以指定name == xxx才使用browser打开页面
+        if spider.name.find("chrome") >= 0:
             spider.browser.get(url=request.url)
             print("访问：{}".format(request.url))
             time.sleep(5)
